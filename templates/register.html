@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Registration</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="register-body">
+<div class="container">
+    <h1>Create your account</h1>
+    <p class="subtitle">Register, upload <strong>Limerick.txt</strong>, and see the word count on the next page.</p>
+
+    <form method="post" enctype="multipart/form-data">
+        <div class="section-title">Account</div>
+        <div class="field-group">
+            <div class="field">
+                <label for="username">Username</label>
+                <input id="username" type="text" name="username" placeholder="Choose a username" required>
+                <div id="username-warning" class="helper"></div>
+            </div>
+            <div class="field">
+                <label for="password">Password</label>
+                <input id="password" type="password" name="password" placeholder="Create a password" required>
+            </div>
+        </div>
+
+        <div class="section-title">Basic details</div>
+        <div class="field-group">
+            <div class="field">
+                <label for="first_name">First name</label>
+                <input id="first_name" type="text" name="first_name" placeholder="John" required>
+            </div>
+            <div class="field">
+                <label for="last_name">Last name</label>
+                <input id="last_name" type="text" name="last_name" placeholder="Doe" required>
+            </div>
+        </div>
+
+        <div class="field">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" placeholder="you@example.com" required>
+        </div>
+
+        <div class="field">
+            <label for="address">Address</label>
+            <input id="address" type="text" name="address" placeholder="123 Main St, City, Country" required>
+        </div>
+
+        <div class="section-title">Limerick file</div>
+        <div class="field">
+            <label for="limerick">Upload Limerick.txt</label>
+            <div class="file-input">
+                <input id="limerick" type="file" name="limerick" accept=".txt">
+            </div>
+            <div class="helper">Upload the provided Limerick.txt file to calculate and display its word count.</div>
+        </div>
+
+        <button class="btn-primary" type="submit">Submit &amp; Continue</button>
+    </form>
+
+    {% if message %}
+        <div class="message error">{{ message }}</div>
+    {% endif %}
+
+    <div class="footer-links">
+        Already registered?
+        <a href="{{ url_for('login') }}">Login here</a>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const usernameInput = document.getElementById('username');
+    const warning = document.getElementById('username-warning');
+    const submitBtn = document.querySelector('button[type="submit"]');
+
+    submitBtn.disabled = false;
+
+    usernameInput.addEventListener('blur', function () {
+        const value = usernameInput.value.trim();
+
+        if (!value) {
+            warning.textContent = '';
+            warning.style.color = '#9ca3af';
+            submitBtn.disabled = false;
+            return;
+        }
+
+        fetch(`{{ url_for('check_username') }}?username=` + encodeURIComponent(value))
+            .then(response => response.json())
+            .then(data => {
+                warning.textContent = data.message;
+                warning.style.color = data.available ? '#16a34a' : '#dc2626'; // green / red
+                submitBtn.disabled = !data.available;
+            })
+            .catch(err => {
+                console.error(err);
+            });
+    });
+});
+</script>
+
+</body>
+</html>

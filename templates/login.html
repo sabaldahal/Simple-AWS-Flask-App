@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Re-Login</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="login-body">
+<div class="container">
+    <h1>Welcome back</h1>
+    <p class="subtitle">Enter your username and password to retrieve your stored information.</p>
+
+    <form method="post">
+        <div>
+            <label for="username">Username</label>
+            <input id="username" type="text" name="username" placeholder="Your username" required>
+        </div>
+
+        <div>
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" placeholder="Your password" required>
+        </div>
+
+        <button class="btn-primary" type="submit">Login</button>
+    </form>
+
+    {% if message %}
+        <div class="message error">{{ message }}</div>
+    {% endif %}
+
+    <div class="footer-links">
+        Need to register?
+        <a href="{{ url_for('register') }}">Create an account</a>
+        <br>
+        <br>
+        Login as Admin?
+        <a href="{{ url_for('admin') }}">Admin login</a>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Admin - All Users</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        th, td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+        th {
+            background-color: #f3f4f6;
+            font-weight: 600;
+            color: #4b5563;
+        }
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="details-body">
+<div class="container container_wide">
+    <h1>All registered users</h1>
+    <p class="subtitle">This page is only visible to admin.</p>
+
+    <div class="card">
+        <div class="card-header">Users</div>
+
+        {% if users %}
+            <div class="table-wrapper">     
+                <table>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>First name</th>
+                        <th>Last name</th>
+                        <th>Address</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for u in users %}
+                        <tr>
+                            <td>{{ u.id }}</td>
+                            <td>{{ u.username }}</td>
+                            <td>{{ u.email }}</td>
+                            <td>{{ u.first_name }}</td>
+                            <td>{{ u.last_name }}</td>
+                            <td>{{ u.address }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        {% else %}
+            <p>No users found.</p>
+        {% endif %}
+    </div>
+
+    <div class="btn-row">
+        <a href="{{ url_for('logout') }}">
+            <button class="btn-secondary" type="button">Logout admin</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>

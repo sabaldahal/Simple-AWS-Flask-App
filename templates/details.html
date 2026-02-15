@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>User Details</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body class="details-body">
+<div class="container">
+    <h1>User Details</h1>
+    <p class="subtitle">Here are the details you submitted and the word count from your uploaded Limerick file.</p>
+
+    <div class="card">
+        <div class="card-header">Basic details</div>
+
+        {% if details %}
+            <div class="info-row">
+                <div class="info-label">First name</div>
+                <div class="info-value">{{ details.first_name }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Last name</div>
+                <div class="info-value">{{ details.last_name }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Email</div>
+                <div class="info-value">{{ details.email }}</div>
+            </div>
+            <div class="info-row">
+                <div class="info-label">Address</div>
+                <div class="info-value">{{ details.address }}</div>
+            </div>
+        {% else %}
+            <p>No details submitted yet.</p>
+        {% endif %}
+    </div>
+
+    <div class="card">
+        <div class="card-header">Limerick.txt</div>
+
+        {% if file_info.word_count %}
+            <p class="file-summary">
+                Your uploaded file contains
+                <strong>{{ file_info.word_count }}</strong> words.
+            </p>
+            <div class="file-badge">
+                Word count ready
+            </div>
+            <div class="btn-row">
+                <form action="{{ url_for('download_limerick', filename=file_info.filename) }}" method="get">
+                    <button class="btn-primary" type="submit">Download Limerick.txt</button>
+                </form>
+            </div>
+        {% else %}
+            <p class="file-summary">No file uploaded yet for this user.</p>
+            <form method="post" enctype="multipart/form-data">
+                <div class="field">
+                    <label for="limerick">Upload Limerick.txt</label>
+                    <div class="file-input">
+                        <input id="limerick" type="file" name="limerick" accept=".txt">
+                    </div>
+                    <div class="helper">Upload the provided Limerick.txt file to calculate and display its word count.</div>
+                </div>
+                <button class="btn-primary" type="submit">Upload &amp; Calculate</button>
+            </form>
+        {% endif %}
+    </div>
+
+    <div class="btn-row">
+        <a href="{{ url_for('register') }}">
+            <button class="btn-secondary" type="button">Go to registration</button>
+        </a>
+        <a href="{{ url_for('login') }}">
+            <button class="btn-secondary" type="button">Login as different user</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>
