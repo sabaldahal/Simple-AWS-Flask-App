@@ -1,8 +1,8 @@
 # Simple AWS Flask App
 
-App can be visited at this [link](ec2-18-118-157-134.us-east-2.compute.amazonaws.com) while the EC2 Instance remains active:
+App can be visited at this [link](http://ec2-18-118-157-134.us-east-2.compute.amazonaws.com) while the EC2 Instance remains active:
 
-[ec2-18-118-157-134.us-east-2.compute.amazonaws.com](ec2-18-118-157-134.us-east-2.compute.amazonaws.com)
+[http://ec2-18-118-157-134.us-east-2.compute.amazonaws.com](http://ec2-18-118-157-134.us-east-2.compute.amazonaws.com)
 
 A small Flask application demonstrating user registration, login, file uploads, and a simple admin dashboard.
 
